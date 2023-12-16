@@ -10,6 +10,7 @@ MONGODB_HOST=mongodb.ikart.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
+exec &>$LOGFILE
 
 echo "Script started executing at $TIMESTAMP" &>> $LOGFILE
 
@@ -29,17 +30,17 @@ then
     exit 1
 fi
 
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>> $LOGFILE
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
 VALIDATE $? "Repos installation"
 
-dnf module enable redis:remi-6.2 -y &>> $LOGFILE
+dnf module enable redis:remi-6.2 -y
 VALIDATE $? "Enabling repos"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>> $LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
 VALIDATE $? "allowing remote connection"
 
-systemctl enable redis &>> $LOGFILE
+systemctl enable redis
 VALIDATE $? "Engabling redis"
 
-systemctl start redis &>> $LOGFILE
+systemctl start redis
 VALIDATE $? "Starting redis"
