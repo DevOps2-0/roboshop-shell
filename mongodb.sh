@@ -29,7 +29,7 @@ then
     exit 1
 fi
 
-cp C:\01-DevOps2.0\repos\roboshop-shell /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+cp C:\01-DevOps2.0\repos\roboshop-shell\mongodb.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 VALIDATE $? "Copied MongoDB Repo"   # The $? variable represents the exit status of the previous command.
 
 dnf install mongodb-org -y  &>> $LOGFILE
