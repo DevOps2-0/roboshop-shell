@@ -35,7 +35,7 @@ VALIDATE $? "Repos installation"
 dnf module enable redis:remi-6.2 -y &>> $LOGFILE
 VALIDATE $? "Enabling repos"
 
-sed -i '/s/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>> $LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>> $LOGFILE
 VALIDATE $? "allowing remote connection"
 
 systemctl enable redis &>> $LOGFILE
