@@ -6,8 +6,6 @@ G="\e[32m"
 Y="\e[33"
 N="\e[0"
 
-MONGODB_HOST=mongodb.ikart.online
-
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
 exec &>$LOGFILE
@@ -31,10 +29,13 @@ then
 fi
 
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
-VALIDATE $? "Repos installation"
+VALIDATE $? "Installing reml release"
 
 dnf module enable redis:remi-6.2 -y
-VALIDATE $? "Enabling repos"
+VALIDATE $? "Enabling redis"
+
+dnf install redis -y
+VALIDATE $? "Installing redis"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
 VALIDATE $? "allowing remote connection"
